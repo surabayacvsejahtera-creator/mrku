@@ -8,7 +8,7 @@ const faqs = [
   { q: "Berapa lama estimasi pengiriman?", a: "Estimasi pengiriman bervariasi tergantung tujuan, mulai dari 2 hari (Makassar) hingga 7 hari (Jayapura). Jadwal keberangkatan mengikuti jadwal kapal Pelni." },
   { q: "Apakah barang saya aman selama pengiriman?", a: "Ya, kami menjamin keamanan barang Anda. Setiap barang dikemas dengan baik, diasuransikan, dan dipantau hingga sampai tujuan. Kami bertanggung jawab penuh atas keselamatan kiriman." },
   { q: "Bagaimana cara mengirim barang melalui CV MR Express?", a: "Cukup hubungi kami via WhatsApp, informasikan detail barang (jenis, berat, tujuan), lalu antar barang ke gudang kami atau gunakan layanan pickup. Kami yang urus sisanya!" },
-  { q: "Apakah tersedia layanan pickup / jemput barang?", a: "Ya, kami menyediakan layanan pickup untuk area Surabaya dan sekitarnya. Hubungi kami untuk mengatur jadwal penjemputan barang Anda." },
+  
   { q: "Bagaimana cara cek tarif pengiriman?", a: "Anda bisa menghubungi kami langsung via WhatsApp untuk mendapatkan estimasi tarif berdasarkan berat, volume, dan tujuan pengiriman. Kami memberikan harga terbaik dan transparan." },
   { q: "Kemana saja area layanan pengiriman?", a: "Kami melayani pengiriman ke seluruh Indonesia Timur termasuk Makassar, Ambon, Sorong, Jayapura, Manokwari, Nabire, Serui, Fak-Fak, Kaimana, Timika, Merauke, dan kota lainnya." },
   { q: "Kapan jam operasional CV MR Express?", a: "Kami buka Senin–Sabtu pukul 08:00–17:00 WIB. Minggu dan hari libur nasional tutup. Untuk pertanyaan di luar jam kerja, silakan kirim pesan WhatsApp dan kami akan balas saat jam operasional." },
