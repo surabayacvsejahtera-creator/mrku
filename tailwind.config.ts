@@ -96,8 +96,8 @@ export default {
           "50%": { transform: "translateY(-8px)" },
         },
         "pulse-blue": {
-          "0%, 100%": { boxShadow: "0 0 20px hsl(200 85% 45% / 0.3)" },
-          "50%": { boxShadow: "0 0 40px hsl(200 85% 45% / 0.6)" },
+          "0%, 100%": { boxShadow: "0 0 20px hsl(var(--primary) / 0.3)" },
+          "50%": { boxShadow: "0 0 40px hsl(var(--primary) / 0.6)" },
         },
         "slide-in-left": {
           "0%": { opacity: "0", transform: "translateX(-40px)" },

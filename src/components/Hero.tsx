@@ -40,7 +40,7 @@ const Hero = () => {
         className="absolute inset-0 z-[1]"
         style={{
           opacity: overlayOpacity,
-          background: "linear-gradient(135deg, hsl(215 85% 15% / 0.9) 0%, hsl(200 85% 30% / 0.75) 50%, hsl(210 60% 20% / 0.85) 100%)",
+          background: "linear-gradient(135deg, hsl(var(--blue-deep) / 0.9) 0%, hsl(var(--primary) / 0.75) 50%, hsl(var(--blue-deep) / 0.85) 100%)",
         }}
       />
       {/* Bottom gradient for smooth transition */}
