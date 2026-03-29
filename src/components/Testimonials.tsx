@@ -24,17 +24,23 @@ const Testimonials = () => (
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: i * 0.1, duration: 0.5 }}
-          className="glass-white rounded-3xl p-7 hover-lift"
+          className="glass-white rounded-3xl p-7 hover-lift relative overflow-hidden"
         >
+          <div className="absolute top-0 left-0 right-0 h-1 gradient-blue" />
           <div className="flex gap-1 mb-4">
             {[...Array(5)].map((_, j) => (
               <Star key={j} className="h-4 w-4 fill-primary text-primary" />
             ))}
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed mb-6">"{t.text}"</p>
-          <div>
-            <div className="font-semibold text-foreground text-sm">{t.name}</div>
-            <div className="text-xs text-muted-foreground">{t.role}</div>
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full gradient-blue flex items-center justify-center text-primary-foreground font-bold text-sm">
+              {t.name.charAt(0)}
+            </div>
+            <div>
+              <div className="font-semibold text-foreground text-sm">{t.name}</div>
+              <div className="text-xs text-muted-foreground">{t.role}</div>
+            </div>
           </div>
         </motion.div>
       ))}

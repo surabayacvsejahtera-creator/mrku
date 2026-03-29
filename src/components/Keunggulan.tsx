@@ -39,7 +39,7 @@ const Keunggulan = () => (
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: i * 0.08, duration: 0.5 }}
-          className="group glass-white rounded-3xl p-7 hover-lift"
+          className="group glass-white rounded-3xl p-7 hover-lift border-b-[3px] border-transparent hover:border-primary/40 transition-all"
         >
           <div className="w-14 h-14 rounded-2xl gradient-blue flex items-center justify-center mb-5 group-hover:shadow-blue-lg transition-shadow">
             <f.icon className="h-7 w-7 text-primary-foreground" />

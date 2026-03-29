@@ -77,8 +77,8 @@ const FAQ = () => {
               transition={{ delay: i * 0.05 }}
               className={`rounded-2xl overflow-hidden transition-shadow duration-300 ${
                 isOpen
-                  ? "glass-white shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.3)] ring-1 ring-primary/10"
-                  : "glass-white shadow-blue"
+                  ? "glass-white shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.3)] ring-2 ring-primary/20"
+                  : "glass-white shadow-blue hover:ring-1 hover:ring-primary/10"
               }`}
             >
               <button

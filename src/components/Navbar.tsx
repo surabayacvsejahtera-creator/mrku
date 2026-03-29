@@ -165,14 +165,19 @@ const Navbar = () => {
 
           {/* Theme picker */}
           <div className="relative" ref={themeRef}>
-            <button
+            <motion.button
               onClick={() => setThemeOpen(!themeOpen)}
+              initial={{ opacity: 0, scale: 0.5, rotate: -90 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
               className="w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
               aria-label="Ganti tema warna"
               title={`Tema: ${DAY_NAMES[dayIndex]}`}
+              whileHover={{ rotate: 20 }}
+              whileTap={{ scale: 0.9 }}
             >
               <Palette className="h-4 w-4" />
-            </button>
+            </motion.button>
             <AnimatePresence>
               {themeOpen && (
                 <motion.div
