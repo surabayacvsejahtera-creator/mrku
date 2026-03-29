@@ -1,10 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, Ship, Clock, HelpCircle, Volume2, VolumeX } from "lucide-react";
+import { Menu, X, ChevronDown, Ship, Clock, HelpCircle, Volume2, VolumeX, Palette, RotateCcw } from "lucide-react";
 import logoImg from "@/assets/logo-mrexpress.png";
 import { useMusicContext } from "@/contexts/MusicContext";
-import { useDailyTheme } from "@/hooks/useDailyTheme";
+import { useDailyTheme, type ThemeDay } from "@/hooks/useDailyTheme";
+
+const colorMap: Record<ThemeDay, string> = {
+  "theme-sunday": "bg-gradient-to-r from-rose-400 to-purple-500",
+  "theme-monday": "bg-blue-500",
+  "theme-tuesday": "bg-green-500",
+  "theme-wednesday": "bg-purple-500",
+  "theme-thursday": "bg-orange-500",
+  "theme-friday": "bg-red-500",
+  "theme-saturday": "bg-cyan-500",
+};
 
 const DAY_NAMES = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
@@ -26,10 +36,12 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const themeRef = useRef<HTMLDivElement>(null);
   const { isPlaying, isMuted, toggleMute } = useMusicContext();
-  const { theme } = useDailyTheme();
+  const { theme, setTheme, isOverridden, THEME_CLASSES, THEME_LABELS } = useDailyTheme();
   const dayIndex = new Date().getDay();
 
   useEffect(() => {
