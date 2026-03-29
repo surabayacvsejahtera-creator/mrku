@@ -1,4 +1,4 @@
-import { DollarSign, Zap, ShieldCheck, Headphones, Truck, Clock } from "lucide-react";
+import { DollarSign, Zap, ShieldCheck, Headphones, Clock } from "lucide-react";
 import SectionWrapper from "./SectionWrapper";
 import { motion } from "framer-motion";
 
@@ -7,7 +7,6 @@ const features = [
   { icon: Zap, title: "Pengiriman Cepat", desc: "Via kapal cepat Pelni dengan estimasi waktu terbaik." },
   { icon: ShieldCheck, title: "Aman & Amanah", desc: "Barang dijamin aman dengan penanganan profesional." },
   { icon: Clock, title: "Tepat Waktu", desc: "Komitmen pengiriman sesuai estimasi yang dijanjikan." },
-  { icon: Truck, title: "Jemput di Lokasi", desc: "Layanan penjemputan barang langsung ke alamat Anda." },
   { icon: Headphones, title: "Layanan Responsif", desc: "Tim siap membantu via WhatsApp kapan saja." },
 ];
 

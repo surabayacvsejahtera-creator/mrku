@@ -37,8 +37,8 @@ const Kontak = () => {
           <div className="space-y-5">
             {[
               { icon: Phone, label: "Telepon / WhatsApp", value: "0823 3682 9960" },
-              { icon: Mail, label: "Email", value: "info@mrexpres.com" },
-              { icon: MapPin, label: "Alamat", value: "Surabaya, Jawa Timur, Indonesia" },
+              { icon: Mail, label: "Email", value: "cvmrexpress@gmail.com" },
+              { icon: MapPin, label: "Alamat", value: "Surabaya, Jawa Timur" },
               { icon: Clock, label: "Jam Operasional", value: "Senin - Sabtu, 08:00 - 17:00 WIB" },
             ].map((item, i) => (
               <motion.div
@@ -60,8 +60,8 @@ const Kontak = () => {
             ))}
 
             <div className="rounded-3xl overflow-hidden h-64 shadow-blue">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.0!2d112.7!3d-7.3!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMTgnMDAuMCJTIDExMsKwNDInMDAuMCJF!5e0!3m2!1sid!2sid!4v1"
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.6!2d112.75!3d-7.25!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7f9c5f7c1b1b1%3A0x1234567890abcdef!2sSurabaya%2C+Jawa+Timur!5e0!3m2!1sid!2sid!4v1"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

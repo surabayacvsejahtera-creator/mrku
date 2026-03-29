@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const steps = [
   { icon: Phone, title: "1. Hubungi Kami via WhatsApp", desc: "Informasikan jenis barang, berat/volume, dan kota tujuan pengiriman. Tim kami akan memberikan estimasi tarif dan jadwal keberangkatan kapal Pelni terdekat." },
   { icon: Package, title: "2. Siapkan & Kemas Barang", desc: "Kemas barang Anda dengan aman. Gunakan kardus tebal, bubble wrap, atau peti kayu untuk barang pecah belah. Pastikan label alamat tujuan terpasang jelas." },
-  { icon: MapPin, title: "3. Antar ke Gudang atau Gunakan Pickup", desc: "Antar barang ke gudang CV MrExpress di Surabaya, atau gunakan layanan jemput barang (pickup) untuk area Surabaya dan sekitarnya." },
+  { icon: MapPin, title: "3. Antar Barang ke Gudang", desc: "Antar barang ke gudang CV MrExpress di Surabaya atau gunakan layanan pickup." },
   { icon: FileText, title: "4. Proses Administrasi & Dokumen", desc: "Tim kami akan memproses surat jalan, manifest pengiriman, dan dokumen pendukung lainnya. Anda akan mendapatkan nomor resi untuk tracking." },
   { icon: Ship, title: "5. Barang Dimuat ke Kapal Pelni", desc: "Barang Anda akan dimuat ke Kapal Cepat Pelni (Kapal Putih) sesuai jadwal keberangkatan. Proses pemuatan dilakukan dengan hati-hati oleh tim profesional." },
   { icon: CheckCircle, title: "6. Barang Sampai di Tujuan", desc: "Barang akan tiba di pelabuhan tujuan sesuai estimasi waktu. Penerima bisa mengambil barang di pelabuhan atau menggunakan layanan antar lokal." },

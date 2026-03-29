@@ -23,7 +23,7 @@ const faqs = [
 
   // Pengiriman
   { category: "pengiriman", q: "Bagaimana cara mengirim barang melalui CV MR Express?", a: "Cukup hubungi kami via WhatsApp, informasikan detail barang (jenis, berat, tujuan), lalu antar barang ke gudang kami atau gunakan layanan pickup. Kami yang urus sisanya!" },
-  { category: "pengiriman", q: "Apakah tersedia layanan pickup / jemput barang?", a: "Ya, kami menyediakan layanan pickup untuk area Surabaya dan sekitarnya. Hubungi kami untuk mengatur jadwal penjemputan barang Anda." },
+  
   { category: "pengiriman", q: "Apa saja jenis barang yang bisa dikirim?", a: "Kami melayani pengiriman berbagai jenis barang seperti elektronik, furniture, spare part motor/mobil, bahan bangunan, pakaian & tekstil, makanan kemasan, peralatan rumah tangga, mesin & alat berat, serta barang dagangan." },
   { category: "pengiriman", q: "Barang apa saja yang tidak boleh dikirim?", a: "Barang yang dilarang antara lain: bahan mudah terbakar, bahan peledak, narkotika dan obat terlarang, senjata api, bahan kimia berbahaya, dan barang ilegal lainnya sesuai peraturan yang berlaku." },
   { category: "pengiriman", q: "Berapa berat minimum dan maksimum pengiriman?", a: "Tidak ada berat minimum untuk pengiriman. Untuk berat maksimum, silakan hubungi kami karena tergantung pada jenis barang dan kapasitas kapal yang tersedia." },
