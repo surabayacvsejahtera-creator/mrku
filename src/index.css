@@ -147,6 +147,7 @@
 @layer base {
   * {
     @apply border-border;
+    transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease, fill 0.5s ease, stroke 0.5s ease;
   }
   body {
     @apply bg-background text-foreground font-body antialiased;
@@ -158,22 +159,22 @@
 
 @layer utilities {
   .gradient-blue {
-    background: linear-gradient(135deg, hsl(195 100% 45%), hsl(210 90% 55%));
+    background: linear-gradient(135deg, hsl(var(--blue-start)), hsl(var(--blue-end)));
   }
   .gradient-blue-deep {
-    background: linear-gradient(160deg, hsl(215 85% 25%), hsl(200 85% 40%), hsl(190 90% 50%));
+    background: linear-gradient(160deg, hsl(var(--blue-deep)), hsl(var(--primary)), hsl(var(--accent)));
   }
   .gradient-cyan {
-    background: linear-gradient(135deg, hsl(185 80% 50%), hsl(195 100% 45%));
+    background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--blue-start)));
   }
   .gradient-light {
-    background: linear-gradient(180deg, hsl(200 30% 97%), hsl(195 40% 94%));
+    background: linear-gradient(180deg, hsl(var(--background)), hsl(var(--secondary)));
   }
   .glass-blue {
-    background: hsl(200 80% 98% / 0.8);
+    background: hsl(var(--secondary) / 0.8);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid hsl(200 60% 90% / 0.6);
+    border: 1px solid hsl(var(--border) / 0.6);
   }
   .glass-white {
     background: hsl(0 0% 100% / 0.85);
@@ -182,20 +183,20 @@
     border: 1px solid hsl(0 0% 100% / 0.5);
   }
   .shadow-blue {
-    box-shadow: 0 8px 40px hsl(200 85% 45% / 0.15);
+    box-shadow: 0 8px 40px hsl(var(--primary) / 0.15);
   }
   .shadow-blue-lg {
-    box-shadow: 0 20px 60px hsl(200 85% 45% / 0.2);
+    box-shadow: 0 20px 60px hsl(var(--primary) / 0.2);
   }
   .hover-lift {
     @apply transition-all duration-300 ease-out;
   }
   .hover-lift:hover {
     transform: translateY(-6px);
-    box-shadow: 0 16px 50px hsl(200 85% 45% / 0.18);
+    box-shadow: 0 16px 50px hsl(var(--primary) / 0.18);
   }
   .text-gradient-blue {
-    background: linear-gradient(135deg, hsl(195 100% 40%), hsl(210 90% 50%));
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
