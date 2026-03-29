@@ -1,10 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, Ship, Clock, HelpCircle, Volume2, VolumeX } from "lucide-react";
+import { Menu, X, ChevronDown, Ship, Clock, HelpCircle, Volume2, VolumeX, Palette, RotateCcw } from "lucide-react";
 import logoImg from "@/assets/logo-mrexpress.png";
 import { useMusicContext } from "@/contexts/MusicContext";
-import { useDailyTheme } from "@/hooks/useDailyTheme";
+import { useDailyTheme, type ThemeDay } from "@/hooks/useDailyTheme";
+
+const colorMap: Record<ThemeDay, string> = {
+  "theme-sunday": "bg-gradient-to-r from-rose-400 to-purple-500",
+  "theme-monday": "bg-blue-500",
+  "theme-tuesday": "bg-green-500",
+  "theme-wednesday": "bg-purple-500",
+  "theme-thursday": "bg-orange-500",
+  "theme-friday": "bg-red-500",
+  "theme-saturday": "bg-cyan-500",
+};
 
 const DAY_NAMES = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
@@ -26,10 +36,12 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const themeRef = useRef<HTMLDivElement>(null);
   const { isPlaying, isMuted, toggleMute } = useMusicContext();
-  const { theme } = useDailyTheme();
+  const { theme, setTheme, isOverridden, THEME_CLASSES, THEME_LABELS } = useDailyTheme();
   const dayIndex = new Date().getDay();
 
   useEffect(() => {
@@ -42,12 +54,16 @@ const Navbar = () => {
     setMobileOpen(false);
     setDropdownOpen(false);
     setMobileDropdownOpen(false);
+    setThemeOpen(false);
   }, [location]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setDropdownOpen(false);
+      }
+      if (themeRef.current && !themeRef.current.contains(e.target as Node)) {
+        setThemeOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -147,10 +163,50 @@ const Navbar = () => {
             </AnimatePresence>
           </div>
 
-          {/* Theme day indicator */}
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-xs font-semibold text-primary">{DAY_NAMES[dayIndex]}</span>
+          {/* Theme picker */}
+          <div className="relative" ref={themeRef}>
+            <button
+              onClick={() => setThemeOpen(!themeOpen)}
+              className="w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+              aria-label="Ganti tema warna"
+              title={`Tema: ${DAY_NAMES[dayIndex]}`}
+            >
+              <Palette className="h-4 w-4" />
+            </button>
+            <AnimatePresence>
+              {themeOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 top-full mt-3 w-56 glass-white rounded-2xl shadow-blue-lg overflow-hidden border border-border/50 p-2"
+                >
+                  <div className="text-xs font-semibold text-muted-foreground mb-2 px-2">Tema Harian</div>
+                  {THEME_CLASSES.map((t, i) => (
+                    <button
+                      key={t}
+                      onClick={() => { setTheme(t); setThemeOpen(false); }}
+                      className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-all ${
+                        theme === t ? "bg-primary/10 text-primary" : "text-foreground hover:bg-muted"
+                      }`}
+                    >
+                      <span className={`w-3 h-3 rounded-full shrink-0 ${colorMap[t]}`} />
+                      {THEME_LABELS[i]}
+                    </button>
+                  ))}
+                  {isOverridden && (
+                    <button
+                      onClick={() => { setTheme("auto"); setThemeOpen(false); }}
+                      className="w-full flex items-center gap-2 px-3 py-2 mt-1 rounded-xl text-xs font-medium text-muted-foreground hover:bg-muted transition-all border-t border-border"
+                    >
+                      <RotateCcw className="h-3 w-3" />
+                      Kembali ke Otomatis
+                    </button>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           <button
@@ -172,7 +228,14 @@ const Navbar = () => {
           </a>
         </div>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-1 md:hidden">
+          <button
+            onClick={() => setThemeOpen(!themeOpen)}
+            className="p-2 text-muted-foreground hover:text-primary transition-colors"
+            aria-label="Ganti tema"
+          >
+            <Palette className="h-5 w-5" />
+          </button>
           <button
             onClick={toggleMute}
             className="p-2 text-muted-foreground hover:text-primary transition-colors"

@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import SplashScreen from "@/components/SplashScreen";
 import BackgroundMusic from "@/components/BackgroundMusic";
-import ThemeToggle from "@/components/ThemeToggle";
+
 import { MusicProvider } from "@/contexts/MusicContext";
 import { useDailyTheme } from "@/hooks/useDailyTheme";
 
@@ -49,7 +49,7 @@ const AppContent = () => {
         </main>
         <Footer />
         <WhatsAppFloat />
-        <ThemeToggle />
+        
         <BackgroundMusic />
       </BrowserRouter>
     </>
