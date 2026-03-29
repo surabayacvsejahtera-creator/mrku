@@ -259,13 +259,10 @@ const Navbar = () => {
         <div className="flex items-center gap-1 md:hidden">
           <button
             onClick={() => setThemeOpen(!themeOpen)}
-            className="flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+            className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full transition-colors"
             aria-label="Ganti tema"
-            title={`Tema hari ini: ${currentDayName}`}
           >
-            <Palette className="h-4 w-4" />
-            <span className="text-[11px] font-semibold">{currentDayName}</span>
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <Palette className="h-5 w-5" />
           </button>
           <button
             onClick={toggleMute}
