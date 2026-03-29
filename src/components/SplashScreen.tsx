@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import logoImg from "@/assets/logo-mrexpress.png";
+import logoImg from "@/assets/logo-mrexpress-256.png";
 
 interface SplashScreenProps {
   onComplete: () => void;

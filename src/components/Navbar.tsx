@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown, Ship, Clock, HelpCircle, Volume2, VolumeX, Palette, RotateCcw } from "lucide-react";
-import logoImg from "@/assets/logo-mrexpress.png";
+import logoImg from "@/assets/logo-mrexpress-256.png";
 import { useMusicContext } from "@/contexts/MusicContext";
 import { useDailyTheme, type ThemeDay } from "@/hooks/useDailyTheme";
 
