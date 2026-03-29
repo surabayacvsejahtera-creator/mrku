@@ -9,7 +9,9 @@ import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import SplashScreen from "@/components/SplashScreen";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import ThemeToggle from "@/components/ThemeToggle";
 import { MusicProvider } from "@/contexts/MusicContext";
+import { useDailyTheme } from "@/hooks/useDailyTheme";
 
 import Index from "./pages/Index";
 import TentangKami from "./pages/TentangKami";
@@ -22,38 +24,46 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const App = () => {
+const AppContent = () => {
+  useDailyTheme();
   const [showSplash, setShowSplash] = useState(true);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <MusicProvider>
-        <Toaster />
-        <Sonner />
-        {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
-        <BrowserRouter>
-          <Navbar />
-          <main>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/tentang" element={<TentangKami />} />
-              <Route path="/layanan" element={<Layanan />} />
-              <Route path="/kontak" element={<Kontak />} />
-              <Route path="/cara-kirim-barang-pelni" element={<CaraKirimBarang />} />
-              <Route path="/estimasi-pengiriman-surabaya-papua" element={<EstimasiPengiriman />} />
-              <Route path="/faq" element={<FAQPage />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </main>
-          <Footer />
-          <WhatsAppFloat />
-          <BackgroundMusic />
-        </BrowserRouter>
-        </MusicProvider>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <>
+      <Toaster />
+      <Sonner />
+      {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
+      <BrowserRouter>
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/tentang" element={<TentangKami />} />
+            <Route path="/layanan" element={<Layanan />} />
+            <Route path="/kontak" element={<Kontak />} />
+            <Route path="/cara-kirim-barang-pelni" element={<CaraKirimBarang />} />
+            <Route path="/estimasi-pengiriman-surabaya-papua" element={<EstimasiPengiriman />} />
+            <Route path="/faq" element={<FAQPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <Footer />
+        <WhatsAppFloat />
+        <ThemeToggle />
+        <BackgroundMusic />
+      </BrowserRouter>
+    </>
   );
 };
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <MusicProvider>
+        <AppContent />
+      </MusicProvider>
+    </TooltipProvider>
+  </QueryClientProvider>
+);
 
 export default App;
