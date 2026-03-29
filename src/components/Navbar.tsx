@@ -54,12 +54,16 @@ const Navbar = () => {
     setMobileOpen(false);
     setDropdownOpen(false);
     setMobileDropdownOpen(false);
+    setThemeOpen(false);
   }, [location]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setDropdownOpen(false);
+      }
+      if (themeRef.current && !themeRef.current.contains(e.target as Node)) {
+        setThemeOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
