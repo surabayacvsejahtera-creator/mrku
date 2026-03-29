@@ -170,13 +170,14 @@ const Navbar = () => {
               initial={{ opacity: 0, scale: 0.5, rotate: -90 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
-              className="w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
               aria-label="Ganti tema warna"
               title={`Tema: ${DAY_NAMES[dayIndex]}`}
-              whileHover={{ rotate: 20 }}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.95 }}
             >
               <Palette className="h-4 w-4" />
+              <span className="text-xs font-semibold">{DAY_NAMES[dayIndex]}</span>
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             </motion.button>
             <AnimatePresence>
               {themeOpen && (
