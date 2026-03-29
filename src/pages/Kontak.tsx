@@ -38,7 +38,7 @@ const Kontak = () => {
             {[
               { icon: Phone, label: "Telepon / WhatsApp", value: "0823 3682 9960" },
               { icon: Mail, label: "Email", value: "cvmrexpress@gmail.com" },
-              { icon: MapPin, label: "Alamat", value: "Surabaya, Jawa Timur" },
+              { icon: MapPin, label: "Alamat", value: "Jl. Prapat Kurung Selatan 5, Perak Utara, Kec. Pabean Cantian, Surabaya, Jawa Timur 60165" },
               { icon: Clock, label: "Jam Operasional", value: "Senin - Sabtu, 08:00 - 17:00 WIB" },
             ].map((item, i) => (
               <motion.div
