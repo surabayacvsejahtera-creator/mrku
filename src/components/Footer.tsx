@@ -1,6 +1,6 @@
 import { MapPin, Phone, Mail, Clock, Facebook, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
-import logoImg from "@/assets/logo-mrexpress.png";
+import logoImg from "@/assets/logo-mrexpress-256.png";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const OperatingStatus = () => {
