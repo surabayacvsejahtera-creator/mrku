@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Anchor, ShieldCheck, Clock, ChevronDown } from "lucide-react";
-import logoImg from "@/assets/logo-mrexpress.png";
+import logoImg from "@/assets/logo-mrexpress-512.png";
 
 const badges = [
   { icon: Anchor, text: "Agen Resmi Pelni" },
@@ -68,6 +68,10 @@ const Hero = () => {
             <motion.img
               src={logoImg}
               alt="CV MR Express"
+              width={512}
+              height={341}
+              loading="eager"
+              decoding="async"
               className="w-[220px] sm:w-[280px] md:w-[340px] lg:w-[400px] h-auto object-contain mx-auto lg:mx-0"
               animate={{ y: [0, -6, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
