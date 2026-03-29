@@ -163,10 +163,50 @@ const Navbar = () => {
             </AnimatePresence>
           </div>
 
-          {/* Theme day indicator */}
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-xs font-semibold text-primary">{DAY_NAMES[dayIndex]}</span>
+          {/* Theme picker */}
+          <div className="relative" ref={themeRef}>
+            <button
+              onClick={() => setThemeOpen(!themeOpen)}
+              className="w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+              aria-label="Ganti tema warna"
+              title={`Tema: ${DAY_NAMES[dayIndex]}`}
+            >
+              <Palette className="h-4 w-4" />
+            </button>
+            <AnimatePresence>
+              {themeOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 top-full mt-3 w-56 glass-white rounded-2xl shadow-blue-lg overflow-hidden border border-border/50 p-2"
+                >
+                  <div className="text-xs font-semibold text-muted-foreground mb-2 px-2">Tema Harian</div>
+                  {THEME_CLASSES.map((t, i) => (
+                    <button
+                      key={t}
+                      onClick={() => { setTheme(t); setThemeOpen(false); }}
+                      className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-all ${
+                        theme === t ? "bg-primary/10 text-primary" : "text-foreground hover:bg-muted"
+                      }`}
+                    >
+                      <span className={`w-3 h-3 rounded-full shrink-0 ${colorMap[t]}`} />
+                      {THEME_LABELS[i]}
+                    </button>
+                  ))}
+                  {isOverridden && (
+                    <button
+                      onClick={() => { setTheme("auto"); setThemeOpen(false); }}
+                      className="w-full flex items-center gap-2 px-3 py-2 mt-1 rounded-xl text-xs font-medium text-muted-foreground hover:bg-muted transition-all border-t border-border"
+                    >
+                      <RotateCcw className="h-3 w-3" />
+                      Kembali ke Otomatis
+                    </button>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           <button
@@ -188,7 +228,14 @@ const Navbar = () => {
           </a>
         </div>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-1 md:hidden">
+          <button
+            onClick={() => setThemeOpen(!themeOpen)}
+            className="p-2 text-muted-foreground hover:text-primary transition-colors"
+            aria-label="Ganti tema"
+          >
+            <Palette className="h-5 w-5" />
+          </button>
           <button
             onClick={toggleMute}
             className="p-2 text-muted-foreground hover:text-primary transition-colors"
