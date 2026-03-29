@@ -40,7 +40,7 @@ const Hero = () => {
         className="absolute inset-0 z-[1]"
         style={{
           opacity: overlayOpacity,
-          background: "linear-gradient(135deg, hsl(var(--blue-deep) / 0.9) 0%, hsl(var(--primary) / 0.75) 50%, hsl(var(--blue-deep) / 0.85) 100%)",
+          background: "linear-gradient(135deg, hsl(var(--blue-deep) / 0.9) 0%, hsl(var(--primary) / 0.7) 40%, hsl(var(--accent) / 0.6) 70%, hsl(var(--blue-deep) / 0.85) 100%)",
         }}
       />
       {/* Bottom gradient for smooth transition */}
@@ -83,10 +83,10 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="inline-flex items-center gap-2 rounded-full px-4 py-2 mb-4 border border-white/20"
-            style={{ background: "hsl(200 85% 45% / 0.15)", backdropFilter: "blur(12px)" }}
+            style={{ background: "hsl(var(--primary) / 0.15)", backdropFilter: "blur(12px)" }}
           >
-            <Anchor className="h-4 w-4 text-cyan-300" />
-            <span className="text-sm font-semibold text-cyan-200">Agen Pelni Surabaya</span>
+            <Anchor className="h-4 w-4" style={{ color: "hsl(var(--accent))" }} />
+            <span className="text-sm font-semibold" style={{ color: "hsl(var(--accent) / 0.9)" }}>Agen Pelni Surabaya</span>
           </motion.div>
 
           <motion.p
@@ -113,9 +113,9 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + i * 0.1 }}
                 className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium text-white/90 border border-white/10"
-                style={{ background: "hsl(200 80% 40% / 0.2)", backdropFilter: "blur(8px)" }}
+                style={{ background: "hsl(var(--primary) / 0.2)", backdropFilter: "blur(8px)" }}
               >
-                <b.icon className="h-4 w-4 text-cyan-300" />
+                <b.icon className="h-4 w-4" style={{ color: "hsl(var(--accent))" }} />
                 {b.text}
               </motion.div>
             ))}

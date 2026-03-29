@@ -4,6 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown, Ship, Clock, HelpCircle, Volume2, VolumeX } from "lucide-react";
 import logoImg from "@/assets/logo-mrexpress.png";
 import { useMusicContext } from "@/contexts/MusicContext";
+import { useDailyTheme } from "@/hooks/useDailyTheme";
+
+const DAY_NAMES = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
 const mainLinks = [
   { to: "/", label: "Beranda" },
@@ -26,6 +29,8 @@ const Navbar = () => {
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { isPlaying, isMuted, toggleMute } = useMusicContext();
+  const { theme } = useDailyTheme();
+  const dayIndex = new Date().getDay();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -140,6 +145,12 @@ const Navbar = () => {
                 </motion.div>
               )}
             </AnimatePresence>
+          </div>
+
+          {/* Theme day indicator */}
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <span className="text-xs font-semibold text-primary">{DAY_NAMES[dayIndex]}</span>
           </div>
 
           <button
