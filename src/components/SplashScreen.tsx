@@ -26,9 +26,11 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
     return () => clearInterval(timer);
   }, []);
 
+  const [ready, setReady] = useState(false);
+
   useEffect(() => {
     if (progress >= 100) {
-      const t = setTimeout(() => setIsExiting(true), 400);
+      const t = setTimeout(() => setReady(true), 300);
       return () => clearTimeout(t);
     }
   }, [progress]);
@@ -39,6 +41,10 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
       return () => clearTimeout(t);
     }
   }, [isExiting, onComplete]);
+
+  const handleEnter = () => {
+    if (ready) setIsExiting(true);
+  };
 
   return (
     <AnimatePresence>
