@@ -1,22 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, Ship, Clock, HelpCircle, Volume2, VolumeX, Palette, RotateCcw } from "lucide-react";
+import { Menu, X, ChevronDown, Ship, Clock, HelpCircle, Volume2, VolumeX } from "lucide-react";
 import logoImg from "@/assets/logo-mrexpress-256.png";
 import { useMusicContext } from "@/contexts/MusicContext";
-import { useDailyTheme, type ThemeDay } from "@/hooks/useDailyTheme";
-
-const colorMap: Record<ThemeDay, string> = {
-  "theme-sunday": "bg-gradient-to-r from-rose-400 to-purple-500",
-  "theme-monday": "bg-blue-500",
-  "theme-tuesday": "bg-green-500",
-  "theme-wednesday": "bg-purple-500",
-  "theme-thursday": "bg-orange-500",
-  "theme-friday": "bg-red-500",
-  "theme-saturday": "bg-cyan-500",
-};
-
-const DAY_NAMES = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
 const mainLinks = [
   { to: "/", label: "Beranda" },
