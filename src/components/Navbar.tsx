@@ -23,14 +23,9 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
-  const [themeOpen, setThemeOpen] = useState(false);
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const themeRef = useRef<HTMLElement>(null);
   const { isPlaying, isMuted, toggleMute } = useMusicContext();
-  const { theme, setTheme, isOverridden, THEME_CLASSES, THEME_LABELS } = useDailyTheme();
-  const dayIndex = new Date().getDay();
-  const currentDayName = DAY_NAMES[dayIndex];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -42,7 +37,6 @@ const Navbar = () => {
     setMobileOpen(false);
     setDropdownOpen(false);
     setMobileDropdownOpen(false);
-    setThemeOpen(false);
   }, [location]);
 
   useEffect(() => {
@@ -50,63 +44,15 @@ const Navbar = () => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setDropdownOpen(false);
       }
-      if (themeRef.current && !themeRef.current.contains(e.target as Node)) {
-        setThemeOpen(false);
-      }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const isDropdownActive = dropdownItems.some((item) => location.pathname === item.to);
 
-  const themeMenuContent = (
-    <>
-      <div className="px-2 pb-2">
-        <div className="text-xs font-semibold text-foreground">Tema Hari Ini: {currentDayName}</div>
-        <div className="text-[11px] text-muted-foreground">
-          {isOverridden ? "Mode manual aktif" : "Mode otomatis aktif mengikuti hari"}
-        </div>
-      </div>
-
-      <button
-        onClick={() => {
-          setTheme("auto");
-          setThemeOpen(false);
-        }}
-        className={`mb-1 w-full flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-xs font-medium transition-all ${
-          !isOverridden ? "bg-primary/10 text-primary" : "text-foreground hover:bg-muted"
-        }`}
-      >
-        <span className="flex items-center gap-2">
-          <RotateCcw className="h-3.5 w-3.5" />
-          Otomatis sesuai hari
-        </span>
-        {!isOverridden && <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />}
-      </button>
-
-      {THEME_CLASSES.map((t, i) => (
-        <button
-          key={t}
-          onClick={() => {
-            setTheme(t);
-            setThemeOpen(false);
-          }}
-          className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-all ${
-            theme === t && isOverridden ? "bg-primary/10 text-primary" : "text-foreground hover:bg-muted"
-          }`}
-        >
-          <span className={`w-3 h-3 rounded-full shrink-0 ${colorMap[t]}`} />
-          {THEME_LABELS[i]}
-        </button>
-      ))}
-    </>
-  );
-
   return (
     <motion.nav
-      ref={themeRef}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
@@ -129,7 +75,7 @@ const Navbar = () => {
           <div className="flex flex-col leading-tight">
             <span className={`font-bold transition-all duration-300 ${scrolled ? "text-base md:text-lg" : "text-lg md:text-xl lg:text-[22px]"}`}>
               <span className="text-foreground">CV </span>
-              <span className="text-red-500">MR</span>
+              <span className="text-destructive">MR</span>
               <span className="text-primary"> EXPRESS</span>
             </span>
             <span className={`text-muted-foreground transition-all duration-300 ${scrolled ? "text-[10px] md:text-xs" : "text-xs md:text-sm"}`}>
@@ -194,36 +140,6 @@ const Navbar = () => {
             </AnimatePresence>
           </div>
 
-          <div className="relative">
-            <motion.button
-              onClick={() => setThemeOpen(!themeOpen)}
-              initial={{ opacity: 0, scale: 0.5, rotate: -90 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
-              aria-label="Ganti tema warna"
-              title={`Tema hari ini: ${currentDayName}`}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Palette className="h-4 w-4" />
-              <span className="text-xs font-semibold">{currentDayName}</span>
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            </motion.button>
-            <AnimatePresence>
-              {themeOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute right-0 top-full mt-3 w-64 glass-white rounded-2xl shadow-blue-lg overflow-hidden border border-border/50 p-2 hidden md:block"
-                >
-                  {themeMenuContent}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
           <button
             onClick={toggleMute}
             className="w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
@@ -245,13 +161,6 @@ const Navbar = () => {
 
         <div className="flex items-center gap-1 md:hidden">
           <button
-            onClick={() => setThemeOpen(!themeOpen)}
-            className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full transition-colors"
-            aria-label="Ganti tema"
-          >
-            <Palette className="h-5 w-5" />
-          </button>
-          <button
             onClick={toggleMute}
             className="p-2 text-muted-foreground hover:text-primary transition-colors"
             aria-label={isMuted ? "Unmute musik" : "Mute musik"}
@@ -267,20 +176,6 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-
-      <AnimatePresence>
-        {themeOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.18 }}
-            className="md:hidden mx-4 mt-3 glass-white rounded-3xl overflow-hidden border border-border/50 p-2 shadow-blue-lg"
-          >
-            {themeMenuContent}
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <AnimatePresence>
         {mobileOpen && (

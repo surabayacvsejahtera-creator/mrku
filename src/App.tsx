@@ -26,7 +26,7 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const AppContent = () => {
-  useDailyTheme();
+  useThemeSystem();
   const [showSplash, setShowSplash] = useState(true);
 
   return (
