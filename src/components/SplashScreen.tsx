@@ -26,9 +26,11 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
     return () => clearInterval(timer);
   }, []);
 
+  const [ready, setReady] = useState(false);
+
   useEffect(() => {
     if (progress >= 100) {
-      const t = setTimeout(() => setIsExiting(true), 400);
+      const t = setTimeout(() => setReady(true), 300);
       return () => clearTimeout(t);
     }
   }, [progress]);
@@ -39,6 +41,10 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
       return () => clearTimeout(t);
     }
   }, [isExiting, onComplete]);
+
+  const handleEnter = () => {
+    if (ready) setIsExiting(true);
+  };
 
   return (
     <AnimatePresence>
@@ -141,15 +147,28 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
               />
             </motion.div>
 
-            {/* Loading text */}
-            <motion.p
-              className="mt-5 text-xs sm:text-sm text-white/50 font-body"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0.4, 0.8, 0.4] }}
-              transition={{ delay: 0.8, duration: 2, repeat: Infinity }}
-            >
-              Menyiapkan pengiriman terbaik untuk Anda...
-            </motion.p>
+            {ready ? (
+              <motion.button
+                onClick={handleEnter}
+                className="mt-6 px-8 py-3 rounded-full text-sm sm:text-base font-semibold text-white border border-white/30 hover:bg-white/10 transition-colors backdrop-blur-sm"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                whileTap={{ scale: 0.95 }}
+                style={{ boxShadow: "0 0 20px hsl(200 85% 50% / 0.3)" }}
+              >
+                Masuk ke Website 🚢
+              </motion.button>
+            ) : (
+              <motion.p
+                className="mt-5 text-xs sm:text-sm text-white/50 font-body"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0.4, 0.8, 0.4] }}
+                transition={{ delay: 0.8, duration: 2, repeat: Infinity }}
+              >
+                Menyiapkan pengiriman terbaik untuk Anda...
+              </motion.p>
+            )}
           </div>
         </motion.div>
       )}
