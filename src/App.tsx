@@ -9,9 +9,10 @@ import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import SplashScreen from "@/components/SplashScreen";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import ThemeSettings from "@/components/ThemeSettings";
 
 import { MusicProvider } from "@/contexts/MusicContext";
-import { useDailyTheme } from "@/hooks/useDailyTheme";
+import { useThemeSystem } from "@/hooks/useThemeSystem";
 
 import Index from "./pages/Index";
 import TentangKami from "./pages/TentangKami";
@@ -25,7 +26,7 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const AppContent = () => {
-  useDailyTheme();
+  useThemeSystem();
   const [showSplash, setShowSplash] = useState(true);
 
   return (
@@ -49,7 +50,7 @@ const AppContent = () => {
         </main>
         <Footer />
         <WhatsAppFloat />
-        
+        <ThemeSettings />
         <BackgroundMusic />
       </BrowserRouter>
     </>

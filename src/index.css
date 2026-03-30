@@ -142,6 +142,200 @@
     --border: 320 20% 90%;
     --input: 320 20% 90%;
   }
+
+  /* === DEFAULT THEME (Biru branding) - same as :root === */
+  .theme-default {
+    --primary: 200 85% 45%;
+    --accent: 195 100% 40%;
+    --ring: 200 85% 45%;
+    --blue-start: 195 100% 45%;
+    --blue-end: 210 90% 55%;
+    --blue-deep: 215 85% 30%;
+    --secondary: 200 40% 94%;
+    --border: 200 20% 90%;
+    --input: 200 20% 90%;
+  }
+
+  /* === LIGHT MODE === */
+  .theme-light {
+    --background: 0 0% 100%;
+    --foreground: 210 50% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 50% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 50% 10%;
+    --primary: 200 85% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 200 30% 96%;
+    --secondary-foreground: 210 50% 12%;
+    --muted: 200 15% 96%;
+    --muted-foreground: 210 15% 40%;
+    --accent: 195 100% 40%;
+    --accent-foreground: 0 0% 100%;
+    --border: 200 15% 92%;
+    --input: 200 15% 92%;
+    --ring: 200 85% 45%;
+    --blue-start: 195 100% 45%;
+    --blue-end: 210 90% 55%;
+    --blue-deep: 215 85% 30%;
+  }
+
+  /* === DARK MODE === */
+  .theme-dark {
+    --background: 215 30% 10%;
+    --foreground: 200 20% 92%;
+    --card: 215 25% 14%;
+    --card-foreground: 200 20% 92%;
+    --popover: 215 25% 14%;
+    --popover-foreground: 200 20% 92%;
+    --primary: 200 85% 55%;
+    --primary-foreground: 215 30% 8%;
+    --secondary: 215 20% 18%;
+    --secondary-foreground: 200 20% 85%;
+    --muted: 215 20% 16%;
+    --muted-foreground: 200 15% 55%;
+    --accent: 195 90% 50%;
+    --accent-foreground: 215 30% 8%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 215 20% 20%;
+    --input: 215 20% 20%;
+    --ring: 200 85% 55%;
+    --blue-start: 195 90% 50%;
+    --blue-end: 210 85% 60%;
+    --blue-deep: 215 80% 20%;
+  }
+
+  /* === EVENT THEMES === */
+  .event-ramadhan {
+    --primary: 155 60% 38%;
+    --accent: 145 70% 35%;
+    --ring: 155 60% 38%;
+    --blue-start: 150 65% 38%;
+    --blue-end: 165 55% 45%;
+    --blue-deep: 155 60% 22%;
+    --secondary: 150 35% 94%;
+    --border: 150 20% 90%;
+    --input: 150 20% 90%;
+  }
+
+  .event-idul-fitri {
+    --primary: 145 65% 42%;
+    --accent: 80 60% 45%;
+    --ring: 145 65% 42%;
+    --blue-start: 140 70% 42%;
+    --blue-end: 90 55% 50%;
+    --blue-deep: 145 60% 25%;
+    --secondary: 140 35% 94%;
+    --border: 140 20% 90%;
+    --input: 140 20% 90%;
+  }
+
+  .event-idul-adha {
+    --primary: 35 80% 48%;
+    --accent: 25 85% 45%;
+    --ring: 35 80% 48%;
+    --blue-start: 30 85% 48%;
+    --blue-end: 45 75% 52%;
+    --blue-deep: 30 75% 28%;
+    --secondary: 35 40% 94%;
+    --border: 35 20% 90%;
+    --input: 35 20% 90%;
+  }
+
+  .event-maulid-nabi {
+    --primary: 160 55% 40%;
+    --accent: 170 60% 38%;
+    --ring: 160 55% 40%;
+    --blue-start: 155 60% 40%;
+    --blue-end: 175 50% 48%;
+    --blue-deep: 160 55% 24%;
+    --secondary: 160 30% 94%;
+    --border: 160 20% 90%;
+    --input: 160 20% 90%;
+  }
+
+  .event-isra-miraj {
+    --primary: 220 70% 55%;
+    --accent: 250 65% 55%;
+    --ring: 220 70% 55%;
+    --blue-start: 215 75% 52%;
+    --blue-end: 255 60% 58%;
+    --blue-deep: 225 65% 30%;
+    --secondary: 225 35% 94%;
+    --border: 225 20% 90%;
+    --input: 225 20% 90%;
+  }
+
+  .event-tahun-baru-islam {
+    --primary: 170 60% 40%;
+    --accent: 180 65% 38%;
+    --ring: 170 60% 40%;
+    --blue-start: 165 65% 40%;
+    --blue-end: 185 55% 48%;
+    --blue-deep: 170 55% 24%;
+    --secondary: 170 30% 94%;
+    --border: 170 20% 90%;
+    --input: 170 20% 90%;
+  }
+
+  .event-17-agustus {
+    --primary: 0 80% 48%;
+    --accent: 0 0% 98%;
+    --ring: 0 80% 48%;
+    --blue-start: 0 85% 48%;
+    --blue-end: 0 70% 55%;
+    --blue-deep: 0 75% 28%;
+    --secondary: 0 30% 95%;
+    --border: 0 20% 90%;
+    --input: 0 20% 90%;
+  }
+
+  .event-hari-pahlawan {
+    --primary: 40 85% 50%;
+    --accent: 25 80% 48%;
+    --ring: 40 85% 50%;
+    --blue-start: 35 90% 50%;
+    --blue-end: 50 80% 55%;
+    --blue-deep: 35 80% 28%;
+    --secondary: 40 35% 94%;
+    --border: 40 20% 90%;
+    --input: 40 20% 90%;
+  }
+
+  .event-hari-santri {
+    --primary: 145 55% 38%;
+    --accent: 135 60% 35%;
+    --ring: 145 55% 38%;
+    --blue-start: 140 60% 38%;
+    --blue-end: 155 50% 45%;
+    --blue-deep: 145 50% 22%;
+    --secondary: 145 30% 94%;
+    --border: 145 20% 90%;
+    --input: 145 20% 90%;
+  }
+
+  .event-tahun-baru {
+    --primary: 45 90% 50%;
+    --accent: 30 85% 48%;
+    --ring: 45 90% 50%;
+    --blue-start: 40 90% 50%;
+    --blue-end: 55 80% 55%;
+    --blue-deep: 40 80% 28%;
+    --secondary: 45 35% 94%;
+    --border: 45 20% 90%;
+    --input: 45 20% 90%;
+  }
+}
+
+/* Dark mode glass overrides */
+.theme-dark .glass-white {
+  background: hsl(215 25% 14% / 0.85);
+  border-color: hsl(215 20% 22% / 0.5);
+}
+.theme-dark .glass-blue {
+  background: hsl(215 20% 16% / 0.8);
+  border-color: hsl(215 20% 22% / 0.6);
 }
 
 @layer base {
