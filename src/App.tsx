@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import SplashScreen from "@/components/SplashScreen";
 import BackgroundMusic from "@/components/BackgroundMusic";
-import ThemeSettings from "@/components/ThemeSettings";
+
 
 import { MusicProvider } from "@/contexts/MusicContext";
 import { useThemeSystem } from "@/hooks/useThemeSystem";
@@ -50,7 +50,6 @@ const AppContent = () => {
         </main>
         <Footer />
         <WhatsAppFloat />
-        <ThemeSettings />
         <BackgroundMusic />
       </BrowserRouter>
     </>

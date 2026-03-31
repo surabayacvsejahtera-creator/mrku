@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Palette, X, Sun, Moon, Monitor, CalendarDays, PartyPopper } from "lucide-react";
+import { Palette, Sun, Moon, Monitor, CalendarDays, PartyPopper } from "lucide-react";
 import { useThemeSystem, type ThemeMode } from "@/hooks/useThemeSystem";
 import { Switch } from "@/components/ui/switch";
 
@@ -27,48 +27,29 @@ const ThemeSettings = () => {
   }, [open]);
 
   return (
-    <div ref={panelRef} className="fixed bottom-6 left-6 z-50">
-      {/* Floating Button */}
-      <motion.button
+    <div ref={panelRef} className="relative">
+      <button
         onClick={() => setOpen(!open)}
-        className="w-12 h-12 rounded-full gradient-blue flex items-center justify-center shadow-blue-lg hover-lift"
-        whileTap={{ scale: 0.9 }}
+        className="w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors relative"
         aria-label="Theme Settings"
-        style={{ boxShadow: "0 0 20px hsl(var(--primary) / 0.4)" }}
+        title="Theme Settings"
       >
-        <AnimatePresence mode="wait">
-          {open ? (
-            <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
-              <X className="h-5 w-5 text-primary-foreground" />
-            </motion.span>
-          ) : (
-            <motion.span key="palette" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
-              <Palette className="h-5 w-5 text-primary-foreground" />
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </motion.button>
+        <Palette className="h-4 w-4" />
+        {activeEvent && eventEnabled && (
+          <span className="absolute -top-0.5 -right-0.5 text-[8px] leading-none">
+            {activeEvent.emoji}
+          </span>
+        )}
+      </button>
 
-      {/* Active event badge */}
-      {activeEvent && eventEnabled && !open && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap"
-        >
-          {activeEvent.emoji}
-        </motion.div>
-      )}
-
-      {/* Panel */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            initial={{ opacity: 0, y: 8, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="absolute bottom-16 left-0 w-72 sm:w-80 bg-card border border-border rounded-2xl shadow-blue-lg overflow-hidden"
+            exit={{ opacity: 0, y: 8, scale: 0.95 }}
+            transition={{ duration: 0.15 }}
+            className="absolute right-0 top-full mt-3 w-72 sm:w-80 bg-card border border-border rounded-2xl shadow-blue-lg overflow-hidden z-50"
           >
             {/* Header */}
             <div className="px-4 py-3 border-b border-border bg-muted/30">
@@ -119,18 +100,12 @@ const ThemeSettings = () => {
                     <PartyPopper className="h-4 w-4 text-primary" />
                     <span className="text-xs font-semibold text-foreground">Event Theme</span>
                   </div>
-                  <Switch
-                    checked={eventEnabled}
-                    onCheckedChange={setEventEnabled}
-                  />
+                  <Switch checked={eventEnabled} onCheckedChange={setEventEnabled} />
                 </div>
                 <p className="text-[10px] text-muted-foreground">
-                  {eventEnabled
-                    ? "Tema otomatis berubah saat hari besar"
-                    : "Tema event dinonaktifkan"}
+                  {eventEnabled ? "Tema otomatis berubah saat hari besar" : "Tema event dinonaktifkan"}
                 </p>
 
-                {/* Active event indicator */}
                 {activeEvent && eventEnabled && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
@@ -144,15 +119,10 @@ const ThemeSettings = () => {
                   </motion.div>
                 )}
 
-                {/* Event list (collapsed) */}
                 {eventEnabled && !activeEvent && (
                   <div className="mt-2 flex flex-wrap gap-1">
                     {EVENTS.map((ev) => (
-                      <span
-                        key={ev.id}
-                        className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground"
-                        title={ev.label}
-                      >
+                      <span key={ev.id} className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground" title={ev.label}>
                         {ev.emoji}
                       </span>
                     ))}
