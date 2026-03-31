@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Anchor, ShieldCheck, Clock, ChevronDown } from "lucide-react";
 import logoImg from "@/assets/logo-mrexpress-512.png";
+import EventBanner from "@/components/EventBanner";
 
 const badges = [
   { icon: Anchor, text: "Agen Resmi Pelni" },
