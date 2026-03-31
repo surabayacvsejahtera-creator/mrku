@@ -141,6 +141,8 @@ const Navbar = () => {
             </AnimatePresence>
           </div>
 
+          <ThemeSettings />
+
           <button
             onClick={toggleMute}
             className="w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
