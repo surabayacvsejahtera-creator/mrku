@@ -163,6 +163,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-1 md:hidden">
+          <ThemeSettings />
           <button
             onClick={toggleMute}
             className="p-2 text-muted-foreground hover:text-primary transition-colors"
