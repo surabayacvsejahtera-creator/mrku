@@ -208,15 +208,18 @@
 
   /* === EVENT THEMES === */
   .event-ramadhan {
-    --primary: 155 60% 38%;
-    --accent: 145 70% 35%;
-    --ring: 155 60% 38%;
-    --blue-start: 150 65% 38%;
-    --blue-end: 165 55% 45%;
-    --blue-deep: 155 60% 22%;
-    --secondary: 150 35% 94%;
-    --border: 150 20% 90%;
-    --input: 150 20% 90%;
+    --primary: 160 55% 32%;
+    --accent: 45 85% 50%;
+    --ring: 160 55% 32%;
+    --blue-start: 155 50% 30%;
+    --blue-end: 170 45% 38%;
+    --blue-deep: 165 55% 15%;
+    --secondary: 155 25% 94%;
+    --border: 155 18% 88%;
+    --input: 155 18% 88%;
+    --ramadhan-gold: 45 85% 50%;
+    --ramadhan-deep: 165 55% 12%;
+    --ramadhan-glow: 45 90% 65%;
   }
 
   .event-idul-fitri {
