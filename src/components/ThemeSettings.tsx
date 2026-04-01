@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Palette, Sun, Moon, Monitor, CalendarDays, PartyPopper, Wifi, WifiOff, Database, Loader2 } from "lucide-react";
-import { useThemeSystem, type ThemeMode } from "@/hooks/useThemeSystem";
+import type { ThemeMode } from "@/hooks/useThemeSystem";
+import { useThemeSystemContext } from "@/contexts/ThemeSystemContext";
 import { Switch } from "@/components/ui/switch";
 
 const modeOptions: { value: ThemeMode; label: string; icon: typeof Sun; desc: string }[] = [
@@ -21,9 +22,16 @@ const ThemeSettings = () => {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const {
-    mode, setMode, eventEnabled, setEventEnabled, activeEvent,
-    EVENTS, eventLoading, dataSource, holidays,
-  } = useThemeSystem();
+    mode,
+    setMode,
+    eventEnabled,
+    setEventEnabled,
+    activeEvent,
+    EVENTS,
+    eventLoading,
+    dataSource,
+    holidays,
+  } = useThemeSystemContext();
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -47,9 +55,7 @@ const ThemeSettings = () => {
       >
         <Palette className="h-4 w-4" />
         {activeEvent && eventEnabled && (
-          <span className="absolute -top-0.5 -right-0.5 text-[8px] leading-none">
-            {activeEvent.emoji}
-          </span>
+          <span className="absolute -top-0.5 -right-0.5 text-[8px] leading-none">{activeEvent.emoji}</span>
         )}
       </button>
 
@@ -62,7 +68,6 @@ const ThemeSettings = () => {
             transition={{ duration: 0.15 }}
             className="absolute right-0 top-full mt-3 w-72 sm:w-80 bg-card border border-border rounded-2xl shadow-blue-lg overflow-hidden z-50"
           >
-            {/* Header */}
             <div className="px-4 py-3 border-b border-border bg-muted/30">
               <h3 className="text-sm font-display font-bold text-foreground flex items-center gap-2">
                 <Palette className="h-4 w-4 text-primary" />
@@ -71,7 +76,6 @@ const ThemeSettings = () => {
               <p className="text-[11px] text-muted-foreground mt-0.5">Pilih tampilan website</p>
             </div>
 
-            {/* Theme modes */}
             <div className="p-3 space-y-1">
               <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold px-2 mb-1.5">
                 Mode Tampilan
@@ -83,14 +87,14 @@ const ThemeSettings = () => {
                     key={opt.value}
                     onClick={() => setMode(opt.value)}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all ${
-                      active
-                        ? "bg-primary/10 text-primary ring-1 ring-primary/20"
-                        : "text-foreground hover:bg-muted/50"
+                      active ? "bg-primary/10 text-primary ring-1 ring-primary/20" : "text-foreground hover:bg-muted/50"
                     }`}
                   >
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
-                      active ? "gradient-blue" : "bg-muted"
-                    }`}>
+                    <div
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+                        active ? "gradient-blue" : "bg-muted"
+                      }`}
+                    >
                       <opt.icon className={`h-4 w-4 ${active ? "text-primary-foreground" : "text-muted-foreground"}`} />
                     </div>
                     <div className="min-w-0">
@@ -103,7 +107,6 @@ const ThemeSettings = () => {
               })}
             </div>
 
-            {/* Event Theme Toggle */}
             <div className="px-3 pb-3">
               <div className="border border-border rounded-xl p-3 bg-muted/20">
                 <div className="flex items-center justify-between mb-2">
@@ -117,7 +120,6 @@ const ThemeSettings = () => {
                   {eventEnabled ? "Tema otomatis saat hari besar (data real-time)" : "Tema event dinonaktifkan"}
                 </p>
 
-                {/* Active event display */}
                 {activeEvent && eventEnabled && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
@@ -131,7 +133,6 @@ const ThemeSettings = () => {
                   </motion.div>
                 )}
 
-                {/* Data source indicator */}
                 <div className="mt-2 flex items-center gap-1.5">
                   {eventLoading ? (
                     <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
@@ -142,17 +143,18 @@ const ThemeSettings = () => {
                     {eventLoading ? "Memuat data event..." : `Sumber: ${sourceInfo.label}`}
                   </span>
                   {holidays.length > 0 && !eventLoading && (
-                    <span className="text-[9px] text-muted-foreground ml-auto">
-                      {holidays.length} event bulan ini
-                    </span>
+                    <span className="text-[9px] text-muted-foreground ml-auto">{holidays.length} event bulan ini</span>
                   )}
                 </div>
 
-                {/* Event emoji list when no active event */}
                 {eventEnabled && !activeEvent && !eventLoading && (
                   <div className="mt-2 flex flex-wrap gap-1">
                     {EVENTS.map((ev) => (
-                      <span key={ev.id} className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground" title={ev.label}>
+                      <span
+                        key={ev.id}
+                        className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground"
+                        title={ev.label}
+                      >
                         {ev.emoji}
                       </span>
                     ))}

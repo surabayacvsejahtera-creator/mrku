@@ -9,10 +9,8 @@ import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import SplashScreen from "@/components/SplashScreen";
 import BackgroundMusic from "@/components/BackgroundMusic";
-
-
 import { MusicProvider } from "@/contexts/MusicContext";
-import { useThemeSystem } from "@/hooks/useThemeSystem";
+import { ThemeSystemProvider, useThemeSystemContext } from "@/contexts/ThemeSystemContext";
 
 import Index from "./pages/Index";
 import TentangKami from "./pages/TentangKami";
@@ -26,7 +24,7 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const AppContent = () => {
-  useThemeSystem();
+  useThemeSystemContext();
   const [showSplash, setShowSplash] = useState(true);
 
   return (
@@ -60,7 +58,9 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <MusicProvider>
-        <AppContent />
+        <ThemeSystemProvider>
+          <AppContent />
+        </ThemeSystemProvider>
       </MusicProvider>
     </TooltipProvider>
   </QueryClientProvider>

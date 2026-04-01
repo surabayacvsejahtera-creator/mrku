@@ -1,9 +1,9 @@
 import { useEffect, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { useThemeSystem, type EventInfo } from "@/hooks/useThemeSystem";
+import type { EventInfo } from "@/hooks/useThemeSystem";
+import { useThemeSystemContext } from "@/contexts/ThemeSystemContext";
 
-// ─── Greeting messages per event ───
 const EVENT_GREETINGS: Record<string, { greeting: string; sub: string }> = {
   "event-ramadhan": {
     greeting: "Selamat Menjalankan Ibadah Puasa 🌙",
@@ -47,7 +47,6 @@ const EVENT_GREETINGS: Record<string, { greeting: string; sub: string }> = {
   },
 };
 
-// ─── Confetti particle ───
 interface Particle {
   id: number;
   x: number;
@@ -106,11 +105,7 @@ const ConfettiParticle = ({ particle }: { particle: Particle }) => {
   return (
     <motion.div
       style={shapeStyle}
-      initial={{
-        y: particle.y,
-        rotate: particle.rotation,
-        opacity: 1,
-      }}
+      initial={{ y: particle.y, rotate: particle.rotation, opacity: 1 }}
       animate={{
         y: "120vh",
         rotate: particle.rotation + 720,
@@ -128,22 +123,21 @@ const ConfettiParticle = ({ particle }: { particle: Particle }) => {
   );
 };
 
-// ─── Banner Component ───
 const EventBanner = () => {
-  const { activeEvent, eventEnabled } = useThemeSystem();
+  const { activeEvent, eventEnabled } = useThemeSystemContext();
   const [dismissed, setDismissed] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
 
   const particles = useMemo(() => generateParticles(40), []);
-
   const isActive = eventEnabled && activeEvent && !dismissed;
 
   useEffect(() => {
-    if (isActive) {
-      setShowConfetti(true);
-      const timer = setTimeout(() => setShowConfetti(false), 8000);
-      return () => clearTimeout(timer);
-    }
+    if (!isActive) return;
+
+    setShowConfetti(true);
+    const timer = window.setTimeout(() => setShowConfetti(false), 8000);
+
+    return () => window.clearTimeout(timer);
   }, [isActive]);
 
   if (!isActive || !activeEvent) return null;
@@ -155,7 +149,6 @@ const EventBanner = () => {
 
   return (
     <>
-      {/* Confetti overlay */}
       <AnimatePresence>
         {showConfetti && (
           <motion.div
@@ -172,7 +165,6 @@ const EventBanner = () => {
         )}
       </AnimatePresence>
 
-      {/* Greeting banner */}
       <motion.div
         initial={{ opacity: 0, y: -20, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -183,12 +175,12 @@ const EventBanner = () => {
         <div
           className="relative rounded-2xl border border-white/20 px-5 py-4 sm:px-6 sm:py-5 text-center overflow-hidden"
           style={{
-            background: "linear-gradient(135deg, hsl(var(--primary) / 0.25) 0%, hsl(var(--accent) / 0.2) 50%, hsl(var(--primary) / 0.3) 100%)",
+            background:
+              "linear-gradient(135deg, hsl(var(--primary) / 0.25) 0%, hsl(var(--accent) / 0.2) 50%, hsl(var(--primary) / 0.3) 100%)",
             backdropFilter: "blur(16px)",
             boxShadow: "0 8px 32px hsl(var(--primary) / 0.3), inset 0 1px 0 hsl(0 0% 100% / 0.1)",
           }}
         >
-          {/* Shimmer effect */}
           <motion.div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -198,7 +190,6 @@ const EventBanner = () => {
             transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
           />
 
-          {/* Close button */}
           <button
             onClick={() => setDismissed(true)}
             className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors"
@@ -207,7 +198,6 @@ const EventBanner = () => {
             <X className="h-4 w-4" />
           </button>
 
-          {/* Emoji */}
           <motion.div
             className="text-3xl sm:text-4xl mb-2"
             animate={{ scale: [1, 1.15, 1], rotate: [0, 5, -5, 0] }}
@@ -216,7 +206,6 @@ const EventBanner = () => {
             {activeEvent.emoji}
           </motion.div>
 
-          {/* Greeting text */}
           <motion.h2
             className="text-base sm:text-lg font-display font-bold text-white drop-shadow-lg"
             initial={{ opacity: 0, y: 8 }}
@@ -234,7 +223,6 @@ const EventBanner = () => {
             {greetingData.sub}
           </motion.p>
 
-          {/* Decorative dots */}
           <div className="flex justify-center gap-1.5 mt-3">
             {[0, 1, 2, 3, 4].map((i) => (
               <motion.div
