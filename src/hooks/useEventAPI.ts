@@ -207,14 +207,6 @@ async function doFetch() {
       dataSource: "fallback",
     };
   }
-    _sharedResult = {
-      detectedEvent: null,
-      holidays: [],
-      loading: false,
-      error: err instanceof Error ? err.message : "Unknown error",
-      dataSource: "fallback",
-    };
-  }
   notifyListeners();
 }
 
