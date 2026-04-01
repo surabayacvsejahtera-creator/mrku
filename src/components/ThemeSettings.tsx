@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Palette, Sun, Moon, Monitor, CalendarDays, PartyPopper } from "lucide-react";
+import { Palette, Sun, Moon, Monitor, CalendarDays, PartyPopper, Wifi, WifiOff, Database, Loader2 } from "lucide-react";
 import { useThemeSystem, type ThemeMode } from "@/hooks/useThemeSystem";
 import { Switch } from "@/components/ui/switch";
 
@@ -11,10 +11,19 @@ const modeOptions: { value: ThemeMode; label: string; icon: typeof Sun; desc: st
   { value: "daily", label: "Auto Harian", icon: CalendarDays, desc: "Warna berubah tiap hari" },
 ];
 
+const SOURCE_LABELS: Record<string, { label: string; icon: typeof Wifi; color: string }> = {
+  api: { label: "Live dari API", icon: Wifi, color: "text-green-500" },
+  cache: { label: "Cache (24 jam)", icon: Database, color: "text-amber-500" },
+  fallback: { label: "Mode offline", icon: WifiOff, color: "text-muted-foreground" },
+};
+
 const ThemeSettings = () => {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
-  const { mode, setMode, eventEnabled, setEventEnabled, activeEvent, EVENTS } = useThemeSystem();
+  const {
+    mode, setMode, eventEnabled, setEventEnabled, activeEvent,
+    EVENTS, eventLoading, dataSource, holidays,
+  } = useThemeSystem();
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -25,6 +34,8 @@ const ThemeSettings = () => {
     if (open) document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, [open]);
+
+  const sourceInfo = SOURCE_LABELS[dataSource] ?? SOURCE_LABELS.fallback;
 
   return (
     <div ref={panelRef} className="relative">
@@ -103,9 +114,10 @@ const ThemeSettings = () => {
                   <Switch checked={eventEnabled} onCheckedChange={setEventEnabled} />
                 </div>
                 <p className="text-[10px] text-muted-foreground">
-                  {eventEnabled ? "Tema otomatis berubah saat hari besar" : "Tema event dinonaktifkan"}
+                  {eventEnabled ? "Tema otomatis saat hari besar (data real-time)" : "Tema event dinonaktifkan"}
                 </p>
 
+                {/* Active event display */}
                 {activeEvent && eventEnabled && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
@@ -119,7 +131,25 @@ const ThemeSettings = () => {
                   </motion.div>
                 )}
 
-                {eventEnabled && !activeEvent && (
+                {/* Data source indicator */}
+                <div className="mt-2 flex items-center gap-1.5">
+                  {eventLoading ? (
+                    <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
+                  ) : (
+                    <sourceInfo.icon className={`h-3 w-3 ${sourceInfo.color}`} />
+                  )}
+                  <span className="text-[9px] text-muted-foreground">
+                    {eventLoading ? "Memuat data event..." : `Sumber: ${sourceInfo.label}`}
+                  </span>
+                  {holidays.length > 0 && !eventLoading && (
+                    <span className="text-[9px] text-muted-foreground ml-auto">
+                      {holidays.length} event bulan ini
+                    </span>
+                  )}
+                </div>
+
+                {/* Event emoji list when no active event */}
+                {eventEnabled && !activeEvent && !eventLoading && (
                   <div className="mt-2 flex flex-wrap gap-1">
                     {EVENTS.map((ev) => (
                       <span key={ev.id} className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground" title={ev.label}>
