@@ -157,30 +157,56 @@ async function doFetch() {
     return;
   }
 
-  // Fetch from API
+  // Fetch from GitHub raw (CORS-friendly, full year data)
   try {
     const today = new Date();
-    const res = await fetch(
-      `${API_BASE}?year=${today.getFullYear()}&month=${today.getMonth() + 1}`,
-      { signal: AbortSignal.timeout(8000) }
-    );
-    if (!res.ok) throw new Error(`API returned ${res.status}`);
-    const json = await res.json();
-    if (json.status === "success" && Array.isArray(json.data)) {
-      const holidayData: APIHoliday[] = json.data;
-      setCache(holidayData);
-      _sharedResult = {
-        detectedEvent: findTodayEvent(holidayData),
-        holidays: holidayData,
-        loading: false,
-        error: null,
-        dataSource: "api",
-      };
-    } else {
-      throw new Error("Invalid API response");
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+
+    let holidayData: APIHoliday[] = [];
+
+    // Try GitHub raw first (returns full year array)
+    try {
+      const res = await fetch(`${GITHUB_RAW_BASE}/${year}.json`, {
+        signal: AbortSignal.timeout(8000),
+      });
+      if (!res.ok) throw new Error(`GitHub raw returned ${res.status}`);
+      const allHolidays: APIHoliday[] = await res.json();
+      // Filter to current month
+      const monthStr = String(month).padStart(2, "0");
+      holidayData = allHolidays.filter((h) => h.date.startsWith(`${year}-${monthStr}`));
+    } catch {
+      // Fallback to Vercel API
+      const res = await fetch(`${API_FALLBACK}?year=${year}&month=${month}`, {
+        signal: AbortSignal.timeout(8000),
+      });
+      if (!res.ok) throw new Error(`API returned ${res.status}`);
+      const json = await res.json();
+      if (json.status === "success" && Array.isArray(json.data)) {
+        holidayData = json.data;
+      } else {
+        throw new Error("Invalid API response");
+      }
     }
+
+    setCache(holidayData);
+    _sharedResult = {
+      detectedEvent: findTodayEvent(holidayData),
+      holidays: holidayData,
+      loading: false,
+      error: null,
+      dataSource: "api",
+    };
   } catch (err) {
-    console.warn("[EventAPI] Fetch failed, using fallback:", err);
+    console.warn("[EventAPI] All fetches failed, using fallback:", err);
+    _sharedResult = {
+      detectedEvent: null,
+      holidays: [],
+      loading: false,
+      error: err instanceof Error ? err.message : "Unknown error",
+      dataSource: "fallback",
+    };
+  }
     _sharedResult = {
       detectedEvent: null,
       holidays: [],
