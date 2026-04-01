@@ -15,7 +15,9 @@ export interface DetectedEvent {
 }
 
 // ─── API Config ───
-const API_BASE = "https://api-hari-libur.vercel.app/api";
+// Primary: GitHub raw (CORS-friendly), Fallback: Vercel API
+const GITHUB_RAW_BASE = "https://raw.githubusercontent.com/andifahruddinakas/api-hari-libur/main/data";
+const API_FALLBACK = "https://api-hari-libur.vercel.app/api";
 const CACHE_KEY = "mrx-holiday-cache";
 const CACHE_DURATION = 24 * 60 * 60 * 1000;
 
