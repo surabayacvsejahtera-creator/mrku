@@ -11,7 +11,7 @@ import SplashScreen from "@/components/SplashScreen";
 import BackgroundMusic from "@/components/BackgroundMusic";
 import EventAnimation from "@/components/EventAnimation";
 import { MusicProvider } from "@/contexts/MusicContext";
-import { ThemeSystemProvider, useThemeSystemContext } from "@/contexts/ThemeSystemContext";
+import { ThemeSystemProvider } from "@/contexts/ThemeSystemContext";
 
 import Index from "./pages/Index";
 import TentangKami from "./pages/TentangKami";
@@ -25,7 +25,6 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const AppContent = () => {
-  useThemeSystemContext();
   const [showSplash, setShowSplash] = useState(true);
 
   return (
