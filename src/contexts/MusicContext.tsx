@@ -24,68 +24,82 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const gainRef = useRef<GainNode | null>(null);
-  const bassRef = useRef<BiquadFilterNode | null>(null);
-  const trebleRef = useRef<BiquadFilterNode | null>(null);
-  const compressorRef = useRef<DynamicsCompressorNode | null>(null);
   const stereoRef = useRef<StereoPannerNode | null>(null);
   const hasInteractedRef = useRef(false);
   const audioInitRef = useRef(false);
+  const volumeRef = useRef(50);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolumeState] = useState(50); // 0-100, default 50%
+  const [volume, setVolumeState] = useState(50);
+
+  // Keep ref in sync
+  useEffect(() => { volumeRef.current = volume; }, [volume]);
+
+  const applyVolume = useCallback((vol: number) => {
+    const normalizedGain = (vol / 100) * 2.0;
+    if (gainRef.current && audioCtxRef.current) {
+      const now = audioCtxRef.current.currentTime;
+      gainRef.current.gain.cancelScheduledValues(now);
+      gainRef.current.gain.setValueAtTime(gainRef.current.gain.value, now);
+      gainRef.current.gain.linearRampToValueAtTime(normalizedGain, now + 0.3);
+    } else if (audioRef.current) {
+      audioRef.current.volume = Math.min(vol / 100, 1);
+    }
+  }, []);
+
+  const fadeIn = useCallback(() => {
+    const vol = volumeRef.current;
+    if (gainRef.current && audioCtxRef.current) {
+      const targetGain = (vol / 100) * 2.0;
+      const now = audioCtxRef.current.currentTime;
+      gainRef.current.gain.cancelScheduledValues(now);
+      gainRef.current.gain.setValueAtTime(0, now);
+      gainRef.current.gain.linearRampToValueAtTime(targetGain, now + 1.5);
+    } else if (audioRef.current) {
+      audioRef.current.volume = 0;
+      let v = 0;
+      const target = Math.min(vol / 100, 1);
+      const interval = setInterval(() => {
+        v += 0.05;
+        if (v >= target) {
+          audioRef.current!.volume = target;
+          clearInterval(interval);
+        } else {
+          audioRef.current!.volume = v;
+        }
+      }, 75);
+    }
+  }, []);
 
   const initAudioContext = useCallback(() => {
     if (audioInitRef.current || !audioRef.current) return;
-
     try {
       const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
       audioCtxRef.current = ctx;
-
       const source = ctx.createMediaElementSource(audioRef.current);
 
-      // Bass boost: low shelf at 150Hz, +6dB
       const bass = ctx.createBiquadFilter();
-      bass.type = "lowshelf";
-      bass.frequency.value = 150;
-      bass.gain.value = 6;
-      bassRef.current = bass;
+      bass.type = "lowshelf"; bass.frequency.value = 150; bass.gain.value = 6;
 
-      // Treble boost: high shelf at 4kHz, +3dB
       const treble = ctx.createBiquadFilter();
-      treble.type = "highshelf";
-      treble.frequency.value = 4000;
-      treble.gain.value = 3;
-      trebleRef.current = treble;
+      treble.type = "highshelf"; treble.frequency.value = 4000; treble.gain.value = 3;
 
-      // Compressor/limiter to prevent clipping
       const compressor = ctx.createDynamicsCompressor();
-      compressor.threshold.value = -6;
-      compressor.knee.value = 6;
-      compressor.ratio.value = 12;
-      compressor.attack.value = 0.003;
-      compressor.release.value = 0.15;
-      compressorRef.current = compressor;
+      compressor.threshold.value = -6; compressor.knee.value = 6;
+      compressor.ratio.value = 12; compressor.attack.value = 0.003; compressor.release.value = 0.15;
 
-      // Gain node for volume boost (1.0 - 2.5)
       const gain = ctx.createGain();
-      gain.gain.value = 0; // start at 0 for fade-in
+      gain.gain.value = 0;
       gainRef.current = gain;
 
-      // Stereo widener via slight pan oscillation (subtle)
       const stereo = ctx.createStereoPanner();
       stereo.pan.value = 0;
       stereoRef.current = stereo;
 
-      // Chain: source → bass → treble → compressor → gain → stereo → destination
-      source.connect(bass);
-      bass.connect(treble);
-      treble.connect(compressor);
-      compressor.connect(gain);
-      gain.connect(stereo);
-      stereo.connect(ctx.destination);
+      source.connect(bass).connect(treble).connect(compressor).connect(gain).connect(stereo).connect(ctx.destination);
 
-      // Subtle stereo widening animation
+      // Subtle stereo widening
       const widenStereo = () => {
         if (!stereoRef.current || !audioCtxRef.current) return;
         const t = audioCtxRef.current.currentTime;
@@ -94,58 +108,17 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
         stereoRef.current.pan.linearRampToValueAtTime(-0.15, t + 4);
         stereoRef.current.pan.linearRampToValueAtTime(0, t + 6);
       };
-      const stereoInterval = setInterval(widenStereo, 6000);
+      setInterval(widenStereo, 6000);
       widenStereo();
 
       audioInitRef.current = true;
-
-      // Apply current volume
-      applyVolume(volume);
-
-      return () => clearInterval(stereoInterval);
+      applyVolume(volumeRef.current);
     } catch {
-      // Fallback: Web Audio API not supported, just use HTML5 audio volume
       console.warn("Web Audio API not available, using fallback");
     }
-  }, [volume]);
+  }, [applyVolume]);
 
-  // Convert 0-100 volume to gain value (0 to 2.0) with fade
-  const applyVolume = useCallback((vol: number) => {
-    const normalizedGain = (vol / 100) * 2.0; // max gain 2.0
-
-    if (gainRef.current && audioCtxRef.current) {
-      const now = audioCtxRef.current.currentTime;
-      gainRef.current.gain.cancelScheduledValues(now);
-      gainRef.current.gain.setValueAtTime(gainRef.current.gain.value, now);
-      gainRef.current.gain.linearRampToValueAtTime(normalizedGain, now + 0.3);
-    } else if (audioRef.current) {
-      // Fallback
-      audioRef.current.volume = Math.min(vol / 100, 1);
-    }
-  }, []);
-
-  const fadeIn = useCallback(() => {
-    if (gainRef.current && audioCtxRef.current) {
-      const targetGain = (volume / 100) * 2.0;
-      const now = audioCtxRef.current.currentTime;
-      gainRef.current.gain.cancelScheduledValues(now);
-      gainRef.current.gain.setValueAtTime(0, now);
-      gainRef.current.gain.linearRampToValueAtTime(targetGain, now + 1.5);
-    } else if (audioRef.current) {
-      audioRef.current.volume = 0;
-      let v = 0;
-      const interval = setInterval(() => {
-        v += 0.05;
-        if (v >= Math.min(volume / 100, 1)) {
-          audioRef.current!.volume = Math.min(volume / 100, 1);
-          clearInterval(interval);
-        } else {
-          audioRef.current!.volume = v;
-        }
-      }, 75);
-    }
-  }, [volume]);
-
+  // Single stable effect — no dependencies that change
   useEffect(() => {
     const audio = new Audio("/audio/bgmusic.mp3");
     audio.loop = true;
@@ -157,12 +130,7 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
       if (!audioRef.current || hasInteractedRef.current) return;
       hasInteractedRef.current = true;
 
-      // Try Web Audio API enhancement
-      try {
-        initAudioContext();
-      } catch (e) {
-        console.warn("Web Audio init failed, using fallback", e);
-      }
+      try { initAudioContext(); } catch (e) { console.warn("Web Audio init failed", e); }
 
       if (audioCtxRef.current?.state === "suspended") {
         audioCtxRef.current.resume().catch(() => {});
@@ -174,13 +142,13 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem("mrexpress-music", "on");
       }).catch((err) => {
         console.warn("Audio play failed:", err);
+        // Reset so next interaction can retry
+        hasInteractedRef.current = false;
       });
     };
 
-    const handleInteraction = () => startMusic();
-
-    document.addEventListener("click", handleInteraction);
-    document.addEventListener("touchstart", handleInteraction);
+    document.addEventListener("click", startMusic);
+    document.addEventListener("touchstart", startMusic);
 
     if ("mediaSession" in navigator) {
       navigator.mediaSession.metadata = new MediaMetadata({
@@ -189,26 +157,19 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
         album: "Background Music",
         artwork: [{ src: "/logo-mrexpress.png", sizes: "512x512", type: "image/png" }],
       });
-
       navigator.mediaSession.setActionHandler("play", () => {
         if (audioCtxRef.current?.state === "suspended") audioCtxRef.current.resume().catch(() => {});
-        audioRef.current?.play().then(() => {
-          fadeIn();
-          setIsPlaying(true);
-          localStorage.setItem("mrexpress-music", "on");
-        }).catch(() => {});
+        audioRef.current?.play().then(() => { fadeIn(); setIsPlaying(true); }).catch(() => {});
       });
-
       navigator.mediaSession.setActionHandler("pause", () => {
         audioRef.current?.pause();
         setIsPlaying(false);
-        localStorage.setItem("mrexpress-music", "off");
       });
     }
 
     return () => {
-      document.removeEventListener("click", handleInteraction);
-      document.removeEventListener("touchstart", handleInteraction);
+      document.removeEventListener("click", startMusic);
+      document.removeEventListener("touchstart", startMusic);
       audio.pause();
       audio.src = "";
       audioCtxRef.current?.close();
@@ -218,8 +179,8 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
   const setVolume = useCallback((v: number) => {
     const clamped = Math.max(0, Math.min(100, v));
     setVolumeState(clamped);
-    if (!isMuted) applyVolume(clamped);
-  }, [isMuted, applyVolume]);
+    applyVolume(clamped);
+  }, [applyVolume]);
 
   const togglePlay = useCallback(() => {
     if (!audioRef.current) return;
@@ -238,14 +199,12 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
   }, [isPlaying, fadeIn]);
 
   const toggleMute = useCallback(() => {
-    const newMuted = !isMuted;
-    setIsMuted(newMuted);
-    if (newMuted) {
-      applyVolume(0);
-    } else {
-      applyVolume(volume);
-    }
-  }, [isMuted, volume, applyVolume]);
+    setIsMuted(prev => {
+      const newMuted = !prev;
+      if (newMuted) { applyVolume(0); } else { applyVolume(volumeRef.current); }
+      return newMuted;
+    });
+  }, [applyVolume]);
 
   return (
     <MusicContext.Provider value={{ isPlaying, isMuted, volume, setVolume, togglePlay, toggleMute }}>
