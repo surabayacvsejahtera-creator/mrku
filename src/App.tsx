@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import SplashScreen from "@/components/SplashScreen";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import EventAnimation from "@/components/EventAnimation";
 import { MusicProvider } from "@/contexts/MusicContext";
 import { ThemeSystemProvider, useThemeSystemContext } from "@/contexts/ThemeSystemContext";
 
