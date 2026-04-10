@@ -50,6 +50,7 @@ const AppContent = () => {
         <Footer />
         <WhatsAppFloat />
         <BackgroundMusic />
+        <EventAnimation />
       </BrowserRouter>
     </>
   );
