@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown, Ship, Clock, HelpCircle, Volume2, VolumeX } from "lucide-react";
 import logoImg from "@/assets/logo-mrexpress-256.png";
 import { useMusicContext } from "@/contexts/MusicContext";
-import ThemeSettings from "@/components/ThemeSettings";
+
 
 const mainLinks = [
   { to: "/", label: "Beranda" },
@@ -141,7 +141,6 @@ const Navbar = () => {
             </AnimatePresence>
           </div>
 
-          <ThemeSettings />
 
           <button
             onClick={toggleMute}
@@ -163,7 +162,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-1 md:hidden">
-          <ThemeSettings />
+          
           <button
             onClick={toggleMute}
             className="p-2 text-muted-foreground hover:text-primary transition-colors"
