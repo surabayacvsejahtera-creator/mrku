@@ -52,17 +52,19 @@
   }
 
   /* === DAILY THEME SYSTEM === */
-  /* Senin - Biru (default/base) */
+  /* Senin - Electric Blue */
   .theme-monday {
-    --primary: 200 85% 45%;
-    --accent: 195 100% 40%;
-    --ring: 200 85% 45%;
-    --blue-start: 195 100% 45%;
-    --blue-end: 210 90% 55%;
-    --blue-deep: 215 85% 30%;
-    --secondary: 200 40% 94%;
-    --border: 200 20% 90%;
-    --input: 200 20% 90%;
+    --background: 210 45% 97%;
+    --primary: 214 92% 44%;
+    --accent: 188 92% 46%;
+    --ring: 214 92% 44%;
+    --blue-start: 205 95% 48%;
+    --blue-end: 223 88% 60%;
+    --blue-deep: 228 72% 24%;
+    --secondary: 210 52% 94%;
+    --muted: 210 38% 95%;
+    --border: 210 24% 88%;
+    --input: 210 24% 88%;
   }
 
   /* Selasa - Hijau */
