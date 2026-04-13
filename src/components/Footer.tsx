@@ -16,7 +16,9 @@ const DAILY_LABELS: Record<number, { label: string; emoji: string }> = {
 
 const ThemeIndicator = () => {
   const { activeEvent } = useThemeSystemContext();
-  const day = new Date().getDay();
+  const now = new Date();
+  const wib = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + 7 * 3600000);
+  const day = wib.getDay();
   const daily = DAILY_LABELS[day];
 
   const label = activeEvent
