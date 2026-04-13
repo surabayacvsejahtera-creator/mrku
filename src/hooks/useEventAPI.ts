@@ -85,9 +85,18 @@ function matchHolidayToEvent(description: string): DetectedEvent | null {
   return null;
 }
 
+function getWIBDate(): Date {
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  return new Date(utc + 7 * 3600000);
+}
+
 function findTodayEvent(holidays: APIHoliday[]): DetectedEvent | null {
-  const today = new Date();
-  const todayStr = today.toISOString().split("T")[0];
+  const today = getWIBDate();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const dd = String(today.getDate()).padStart(2, "0");
+  const todayStr = `${yyyy}-${mm}-${dd}`;
 
   for (const h of holidays) {
     if (h.date === todayStr) {
