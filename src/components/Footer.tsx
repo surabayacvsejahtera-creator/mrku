@@ -1,7 +1,35 @@
-import { MapPin, Phone, Mail, Clock, Facebook, Instagram } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Palette } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoImg from "@/assets/logo-mrexpress-256.png";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useThemeSystemContext } from "@/contexts/ThemeSystemContext";
+
+const DAILY_LABELS: Record<number, { label: string; emoji: string }> = {
+  0: { label: "Minggu", emoji: "💜" },
+  1: { label: "Senin", emoji: "🔵" },
+  2: { label: "Selasa", emoji: "🟢" },
+  3: { label: "Rabu", emoji: "🟠" },
+  4: { label: "Kamis", emoji: "🟡" },
+  5: { label: "Jumat", emoji: "🟤" },
+  6: { label: "Sabtu", emoji: "🔴" },
+};
+
+const ThemeIndicator = () => {
+  const { activeEvent } = useThemeSystemContext();
+  const day = new Date().getDay();
+  const daily = DAILY_LABELS[day];
+
+  const label = activeEvent
+    ? `${activeEvent.emoji} Event: ${activeEvent.label}`
+    : `${daily.emoji} Tema ${daily.label}`;
+
+  return (
+    <div className="flex items-center justify-center gap-1.5 text-xs text-primary-foreground/50">
+      <Palette className="h-3 w-3" />
+      <span>{label}</span>
+    </div>
+  );
+};
 
 const OperatingStatus = () => {
   const now = new Date();
@@ -145,6 +173,7 @@ const Footer = () => (
       </div>
 
       <div className="border-t border-primary-foreground/10 mt-12 pt-6 text-center text-sm text-primary-foreground/40 space-y-1">
+        <ThemeIndicator />
         <p>&copy; {new Date().getFullYear()} CV MR Express. Semua hak dilindungi.</p>
         <p>
           Developed by{" "}
