@@ -29,7 +29,13 @@ export interface EventInfo {
   emoji: string;
 }
 
-// ─── Daily theme helper ───
+// ─── WIB helper (UTC+7) ───
+function getWIBDate(): Date {
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  return new Date(utc + 7 * 3600000);
+}
+
 const DAILY_THEMES: DailyTheme[] = [
   "theme-sunday",
   "theme-monday",
