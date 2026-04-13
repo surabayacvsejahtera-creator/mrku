@@ -88,7 +88,7 @@ export function useThemeSystem() {
   // Resolve theme: event takes priority, otherwise daily
   const resolveTheme = useCallback((): string => {
     if (activeEvent) return activeEvent.id;
-    return DAILY_THEMES[new Date().getDay()];
+    return DAILY_THEMES[getWIBDate().getDay()];
   }, [activeEvent]);
 
   // Apply theme
