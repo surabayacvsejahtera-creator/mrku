@@ -173,6 +173,7 @@ const Footer = () => (
       </div>
 
       <div className="border-t border-primary-foreground/10 mt-12 pt-6 text-center text-sm text-primary-foreground/40 space-y-1">
+        <ThemeIndicator />
         <p>&copy; {new Date().getFullYear()} CV MR Express. Semua hak dilindungi.</p>
         <p>
           Developed by{" "}
